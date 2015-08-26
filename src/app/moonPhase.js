@@ -21,7 +21,7 @@ angular.module('lunarPhases')
                     blur: 0,
                     earthshine: 0.3,
                 });
-            }
+            };
 
             attr.$observe('percentIllum', function(value){
                 if(value){

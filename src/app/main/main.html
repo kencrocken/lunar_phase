@@ -13,6 +13,8 @@
     <div id='moon'></div>
     <div id="info">
       <p>Percent Illuminated: {{ lunarPhase.percentIlluminated * 100 | number:0 }}%</p>
+      <p ng-if="error"> {{ error.error.message }}<p>
+      <p ng-if="error">Using default location: Baltimore, MD<p>
     </div>
   </moon>
     <div id="stars"></div>
