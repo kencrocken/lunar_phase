@@ -13,9 +13,10 @@ angular.module('lunarPhases')
             //Call the factory and get the astronomy location
             var astronomy = Astronomy.get({lat: $scope.myPosition.coords.latitude, long: $scope.myPosition.coords.longitude});
             astronomy.$promise.then(function(data){
-
+                console.log(data);
                 //Store moon phase data
                 $scope.lunarPhase = data.moon_phase;
+
                 //Convert percent 
                 $scope.lunarPhase.percentIlluminated = String($scope.lunarPhase.percentIlluminated * 0.01);
                 
