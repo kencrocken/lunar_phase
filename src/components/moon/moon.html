@@ -1,0 +1,13 @@
+<moon percent-illum="{{ lunarPhase.percentIlluminated }}" wax-wane="{{ phaseBool }}" diameter="200" shadow-colour="#333333" light-colour="#e6e6e6"  ng-if="loadingDone">
+    <div id="title">
+        <span>Tonight's Lunar Phase</span>
+        <br>
+        <span>{{ lunarPhase.phaseofMoon }}</span>
+    </div>
+    <div id='moon'></div>
+    <div id="info">
+        <p>Percent Illuminated: {{ lunarPhase.percentIlluminated * 100 | number:0 }}%</p>
+        <p ng-if="error">{{ error.error.message }}<p>
+        <p ng-if="error">Using default location: Baltimore, MD<p>
+    </div>
+</moon>
