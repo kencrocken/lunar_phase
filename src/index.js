@@ -1,8 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import './lunarPhase/stars.css';
+import './lunarPhase/LunarPhase.css';
+import LunarPhase from './lunarPhase/LunarPhase';
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<div className="App">
+    <LunarPhase />
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>
+</div>, document.getElementById('root'));
 registerServiceWorker();

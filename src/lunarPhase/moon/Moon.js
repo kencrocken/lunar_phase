@@ -69,7 +69,7 @@ class Moon extends Component {
 
                 }
             }
-            console.log({
+            console.debug({
 
                 illumination: illumination,
                 outer: outerColor,

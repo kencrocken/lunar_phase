@@ -1,7 +1,7 @@
 /* eslint no-console: 0 */
 /* global console, navigator */
 import React, { Component } from 'react';
-import Moon from "./Moon";
+import Moon from "./moon/Moon";
 import './LunarPhase.css'
 class LunarPhase extends Component {
     constructor( props ){
