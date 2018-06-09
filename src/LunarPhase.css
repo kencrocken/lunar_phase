@@ -1,0 +1,13 @@
+.moon-phase-title {
+  color: #FFF;
+  text-align: center;
+  font-family: 'lato', sans-serif;
+  font-weight: 300;
+  font-size: 31px;
+  letter-spacing: 1px; }
+
+span.has-text-gradient {
+  background: -webkit-linear-gradient(white, #38495a);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent; }
