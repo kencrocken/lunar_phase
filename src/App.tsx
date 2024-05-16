@@ -68,8 +68,9 @@ function App() {
   }, [coords, fetchMoonData]);
   
   return (
+    <>
+      <Starfield />
       <div className="App">
-        <Starfield />
         <header className="moon-phase-header">
           <h1 className="has-text-gradient">Tonight&#39;s Lunar Phase</h1>
         </header>
@@ -105,6 +106,7 @@ function App() {
           </>
         )}
       </div>
+    </>
   );
 }
 
