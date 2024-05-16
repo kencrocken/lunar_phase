@@ -1,0 +1,20 @@
+.moon-wrapper {
+    position: relative;
+    min-height: 230px;
+    
+    .outer {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        border: 1px solid black;
+        z-index: 1000;
+        overflow: hidden;
+    
+        .inner {
+            position: absolute;
+        }
+    }
+}
+
+
+
