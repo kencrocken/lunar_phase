@@ -1,4 +1,5 @@
 import './moon.scss';
+import { Moon as MoonAPIData } from '../moonApi.types';
 
 const MOON_DEFAULTS = {
   diameter: 200,
@@ -8,7 +9,7 @@ const MOON_DEFAULTS = {
   blur: 1
 }
 
-export const Moon = ({ moonData }: {moonData: any}) => {
+export const Moon = ({ moonData }: {moonData: MoonAPIData}) => {
   /**
    * Calculates the phase of the moon based on the provided moon data.
    * @returns An object containing the diameter for the overlay and the color for the outer and.
@@ -36,7 +37,7 @@ export const Moon = ({ moonData }: {moonData: any}) => {
    * @param illumination The illumination value of the moon.
    * @returns An object containing the inner radius (d) and offset (o) of the moon.
    */
-  const calcInner = (illumination: any) => {
+  const calcInner = (illumination: number) => {
     const n = ((1-Math.abs(illumination)) * MOON_DEFAULTS.diameter/2) || 0.01;
     const innerRadius = n/2 + MOON_DEFAULTS.diameter * MOON_DEFAULTS.diameter / (8 * n);
 

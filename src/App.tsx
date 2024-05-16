@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
-import './App.scss';
+import { FaGithub } from "react-icons/fa";
 
 import { Moon } from './Moon/moon';
 import { Starfield } from './Starfield/starfield';
-
+import type { Moon as MoonAPIData, MoonApi } from './moonApi.types';
+import './App.scss';
 
 
 type Coordinates = {
@@ -14,13 +15,12 @@ type Coordinates = {
 function App() {
   const [coords, setCoords] = useState<Coordinates>({ latitude: 0, longitude: 0 });
   const [fetchingData, setFetchingData] = useState<boolean>(true);
-  const [moonData, setMoonData] = useState<any>();
+  const [moonData, setMoonData] = useState<MoonAPIData>();
   const [locationError, setLocationError] = useState<string>();
   const [moonError, setMoonError] = useState<string>();
 
   /**
    * Fetches moon data from the API based on the provided coordinates.
-   * @returns {Promise<void>} A promise that resolves when the moon data is fetched.
    */
   const fetchMoonData = useCallback(async () => {
     const url = 'https://moon-phase.p.rapidapi.com/advanced';
@@ -36,8 +36,8 @@ function App() {
       const latitude = coords?.latitude ? coords.latitude : "39.0963965";
       const longitude = coords?.longitude ? coords.longitude : "-76.8590672";
       const response = await fetch(`${url}?lat=${latitude}&lon=${longitude}`, options);
-      const result = await response.json();
-      setMoonData(result.moon);
+      const result: MoonApi = await response.json();
+      setMoonData(result.moon); 
       setFetchingData(false);
     } catch (error: any) {
       console.error(error);
@@ -77,9 +77,9 @@ function App() {
         <header className="moon-phase-header">
           <h1 className="has-text-gradient">Tonight&#39;s Lunar Phase</h1>
         </header>
-        {!fetchingData &&(
+        {!fetchingData && (
           <>
-            {!Boolean(moonError) && (
+            {!Boolean(moonError) && moonData && (
               <>
                 <div className="moon-phase-title has-text-gradient">
                   {moonData.phase_name}
@@ -93,9 +93,9 @@ function App() {
             )}
             {!Boolean(locationError) && (
               <div>
-                  <p>Your current position:</p>
+                  <p>Your current Latitude &amp; Longitude:</p>
                   <p className="position coords">
-                      <span className="latitude"> {coords.latitude}, </span>
+                      <span className="latitude">{coords.latitude}, </span> {' '}
                       <span className="longitude">{coords.longitude}</span>
                   </p>
               </div>
@@ -108,6 +108,9 @@ function App() {
             )}
           </>
         )}
+        <a href="https://github.com/kencrocken/lunar_phase" className="github-link" aria-label="View source on GitHub">
+          <FaGithub />
+        </a>
       </div>
     </>
   );
