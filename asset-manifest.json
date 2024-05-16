@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/lunar_phase/static/css/main.9eebaa3d.css",
-    "main.js": "/lunar_phase/static/js/main.7cfa7e97.js",
+    "main.css": "/lunar_phase/static/css/main.20ac49ff.css",
+    "main.js": "/lunar_phase/static/js/main.50210ccc.js",
     "index.html": "/lunar_phase/index.html",
-    "main.9eebaa3d.css.map": "/lunar_phase/static/css/main.9eebaa3d.css.map",
-    "main.7cfa7e97.js.map": "/lunar_phase/static/js/main.7cfa7e97.js.map"
+    "main.20ac49ff.css.map": "/lunar_phase/static/css/main.20ac49ff.css.map",
+    "main.50210ccc.js.map": "/lunar_phase/static/js/main.50210ccc.js.map"
   },
   "entrypoints": [
-    "static/css/main.9eebaa3d.css",
-    "static/js/main.7cfa7e97.js"
+    "static/css/main.20ac49ff.css",
+    "static/js/main.50210ccc.js"
   ]
 }
