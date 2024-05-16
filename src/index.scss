@@ -5,11 +5,17 @@ body, #root {
   height: 100vh;
 }
 
+#root {
+  position: relative;
+}
+
 body{
-  overflow: hidden;
   background: radial-gradient(ellipse at bottom, #1b2735 0, #090a0f 100%);
+  overflow: hidden;
   font-family: 'Lato', sans-serif;
   color: white;
   text-align: center;
+  padding: 0;
+  margin: 0;
 }
 

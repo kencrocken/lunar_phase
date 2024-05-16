@@ -1,7 +1,10 @@
 @use 'sass:color';
 
-header {
-  padding-top: 2.5rem;
+.App {
+  position: absolute;
+  top: 10%;
+  left: 0;
+  right: 0;
 }
 
 .has-text-gradient {
