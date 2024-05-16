@@ -1,6 +1,11 @@
 //  Stars courtsey of https://codepen.io/saransh/pen/BKJun/
-//  n is number of stars required 
 
+/**
+ * Generates a multiple box-shadow value with random pixel values.
+ *
+ * @param {number} $n - The number of box-shadow values to generate.
+ * @return {string} - The generated box-shadow value.
+ */
 @function multiple-box-shadow ($n) {
   $value : '#{random(2000)}px #{random(2000)}px #FFF';
 

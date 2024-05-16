@@ -18,6 +18,10 @@ function App() {
   const [locationError, setLocationError] = useState<string>();
   const [moonError, setMoonError] = useState<string>();
 
+  /**
+   * Fetches moon data from the API based on the provided coordinates.
+   * @returns {Promise<void>} A promise that resolves when the moon data is fetched.
+   */
   const fetchMoonData = useCallback(async () => {
     const url = 'https://moon-phase.p.rapidapi.com/advanced';
     const options = {
@@ -40,10 +44,9 @@ function App() {
       setMoonError(error.message);
       setFetchingData(false);
     }
-  }, []);
+  }, [coords]);
 
   useEffect(() => {
-
     if ("geolocation" in navigator) {
       const options = {
         enableHighAccuracy : true,
@@ -56,8 +59,8 @@ function App() {
         setLocationError(error.message);
       }, options );
     } else {
-        console.warn('not available');
-        setLocationError('Geolocation not available.');
+      console.warn('not available');
+      setLocationError('Geolocation not available.');
     }
   }, []);
 
