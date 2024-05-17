@@ -7,6 +7,9 @@ body, #root {
 
 #root {
   position: relative;
+  margin: 0 auto;
+  max-width: 1300px;
+  overflow: hidden;
 }
 
 body{
