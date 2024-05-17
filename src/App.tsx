@@ -3,8 +3,10 @@ import { FaGithub } from "react-icons/fa";
 
 import { Moon } from './Moon/moon';
 import { Starfield } from './Starfield/starfield';
+import { Loader } from './Loader/loader';
 import type { Moon as MoonAPIData, MoonApi } from './moonApi.types';
 import './App.scss';
+
 
 
 type Coordinates = {
@@ -77,6 +79,9 @@ function App() {
         <header className="moon-phase-header">
           <h1 className="has-text-gradient">Tonight&#39;s Lunar Phase</h1>
         </header>
+        { fetchingData && (
+          <Loader />
+        )}
         {!fetchingData && (
           <>
             {!Boolean(moonError) && moonData && (
@@ -108,9 +113,11 @@ function App() {
             )}
           </>
         )}
-        <a href="https://github.com/kencrocken/lunar_phase" className="github-link" aria-label="View source on GitHub">
-          <FaGithub />
-        </a>
+        <div>
+          <a href="https://github.com/kencrocken/lunar_phase" className="github-link" aria-label="View source on GitHub">
+            <FaGithub />
+          </a>
+        </div>
       </div>
     </>
   );
