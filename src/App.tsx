@@ -6,20 +6,14 @@ import { Starfield } from './Starfield/starfield';
 import { Loader } from './Loader/loader';
 import type { Moon as MoonAPIData, MoonApi } from './moonApi.types';
 import './App.scss';
-
-
-
-type Coordinates = {
-  latitude: number,
-  longitude: number
-}
+import { useGeolocation } from './Hooks/useGeolocation';
 
 function App() {
-  const [coords, setCoords] = useState<Coordinates>({ latitude: 0, longitude: 0 });
   const [fetchingData, setFetchingData] = useState<boolean>(true);
   const [moonData, setMoonData] = useState<MoonAPIData>();
-  const [locationError, setLocationError] = useState<string>();
   const [moonError, setMoonError] = useState<string>();
+
+  const { coords, error: locationError } = useGeolocation();
 
   /**
    * Fetches moon data from the API based on the provided coordinates.
@@ -47,24 +41,6 @@ function App() {
       setFetchingData(false);
     }
   }, [coords]);
-
-  useEffect(() => {
-    if ("geolocation" in navigator) {
-      const options = {
-        enableHighAccuracy : true,
-        timeout            : 10000,
-        maximumAge         : 0
-      };
-      navigator.geolocation.getCurrentPosition((position) => {
-        setCoords({ latitude: position.coords.latitude, longitude: position.coords.longitude });
-      }, (error) => {
-        setLocationError(error.message);
-      }, options );
-    } else {
-      console.warn('not available');
-      setLocationError('Geolocation not available.');
-    }
-  }, []);
 
   useEffect(() => {
     if (coords.latitude !== 0 && coords.longitude !== 0) {
