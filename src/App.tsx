@@ -1,53 +1,22 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import { FaGithub } from "react-icons/fa";
 
 import { Moon } from './Moon/moon';
 import { Starfield } from './Starfield/starfield';
 import { Loader } from './Loader/loader';
-import type { Moon as MoonAPIData, MoonApi } from './moonApi.types';
-import './App.scss';
+
 import { useGeolocation } from './Hooks/useGeolocation';
+import { useMoonData } from './Hooks/useMoonData';
+
+import './App.scss';
+
 
 function App() {
-  const [fetchingData, setFetchingData] = useState<boolean>(true);
-  const [moonData, setMoonData] = useState<MoonAPIData>();
-  const [moonError, setMoonError] = useState<string>();
+
 
   const { coords, error: locationError } = useGeolocation();
+  const { isFetching, moonData, error: moonError } = useMoonData(coords);
 
-  /**
-   * Fetches moon data from the API based on the provided coordinates.
-   */
-  const fetchMoonData = useCallback(async () => {
-    const url = 'https://moon-phase.p.rapidapi.com/advanced';
-    const options = {
-      method: 'GET',
-      headers: {
-        'X-RapidAPI-Key': process.env.REACT_APP_MOON_API_KEY || '',
-        'X-RapidAPI-Host': 'moon-phase.p.rapidapi.com'
-      },
-    };
-    try {
-      // Default to Baltimore, MD
-      const latitude = coords?.latitude ? coords.latitude : "39.0963965";
-      const longitude = coords?.longitude ? coords.longitude : "-76.8590672";
-      const response = await fetch(`${url}?lat=${latitude}&lon=${longitude}`, options);
-      const result: MoonApi = await response.json();
-      setMoonData(result.moon); 
-      setFetchingData(false);
-    } catch (error: any) {
-      console.error(error);
-      setMoonError(error.message);
-      setFetchingData(false);
-    }
-  }, [coords]);
-
-  useEffect(() => {
-    if (coords.latitude !== 0 && coords.longitude !== 0) {
-      fetchMoonData();
-    }
-  }, [coords, fetchMoonData]);
-  
   return (
     <>
       <Starfield />
@@ -55,10 +24,10 @@ function App() {
         <header className="moon-phase-header">
           <h1 className="has-text-gradient">Tonight&#39;s Lunar Phase</h1>
         </header>
-        { fetchingData && (
+        { isFetching && (
           <Loader />
         )}
-        {!fetchingData && (
+        {!isFetching && (
           <>
             {!Boolean(moonError) && moonData && (
               <>
