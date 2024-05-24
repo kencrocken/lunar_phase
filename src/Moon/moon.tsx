@@ -1,5 +1,5 @@
 import './moon.scss';
-import { Moon as MoonAPIData } from '../moonApi.types';
+import type { NavalMoonAPI } from '../navalApi.types';
 
 const MOON_DEFAULTS = {
   diameter: 200,
@@ -9,14 +9,14 @@ const MOON_DEFAULTS = {
   blur: 1
 }
 
-export const Moon = ({ moonData }: {moonData: MoonAPIData}) => {
+export const Moon = ({ moonData }: {moonData: NavalMoonAPI}) => {
+  const isWaxing = moonData.properties.data.curphase.toLowerCase().includes('waxing');
   /**
    * Calculates the phase of the moon based on the provided moon data.
    * @returns An object containing the diameter for the overlay and the color for the outer and.
    */
   const setPhase = () => {
-    const percentIlluminated = parseInt(moonData.illumination) / 100
-    const isWaxing = moonData.stage === 'waxing';
+    const percentIlluminated = parseInt(moonData.properties.data.fracillum) / 100;
     if (percentIlluminated < 0.5) {
       return {
         illumination: isWaxing ? percentIlluminated : percentIlluminated * -1,
@@ -25,7 +25,7 @@ export const Moon = ({ moonData }: {moonData: MoonAPIData}) => {
       };
     } else {
       return {
-        illumination: isWaxing ? 1 - percentIlluminated : 1 - percentIlluminated * -1,
+        illumination: isWaxing ? 1 - percentIlluminated * -1 :  1 - percentIlluminated,
         outer: MOON_DEFAULTS.shadowColor,
         inner:  MOON_DEFAULTS.lightColor, 
       };
@@ -46,7 +46,7 @@ export const Moon = ({ moonData }: {moonData: MoonAPIData}) => {
       o: illumination > 0 ? (MOON_DEFAULTS.diameter / 2 - n) : -2 * innerRadius + MOON_DEFAULTS.diameter / 2  + n
     }
   }
-
+  
   const phase = setPhase();
   const innerDiameter = calcInner(phase.illumination * 2);
   const blurredDiameter = innerDiameter.d - MOON_DEFAULTS.blur;
@@ -59,6 +59,7 @@ export const Moon = ({ moonData }: {moonData: MoonAPIData}) => {
     width: `${MOON_DEFAULTS.diameter}px`,
     backgroundColor: outerColor,
     borderRadius: `${MOON_DEFAULTS.diameter/2}px`,
+    transform: `translateX(-50%) ${isWaxing ? 'rotateX(180deg) rotateY(180deg)' : ''}`
   } as React.CSSProperties;
 
   const innerBoxStyles = {

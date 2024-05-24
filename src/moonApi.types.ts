@@ -1,4 +1,3 @@
-
 export type MoonApi = {
     timestamp:   number;
     datestamp:   string;

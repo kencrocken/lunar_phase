@@ -10,28 +10,41 @@ import { useMoonData } from "./Hooks/useMoonData";
 import "./App.scss";
 
 
-const CoordinatesDisplay = ({ coords }: { coords: Location}) => {
+const CoordinatesDisplay = ({ coords }: { coords?: Location}) => {
   return (
-    <div>
-      <p>Your current Latitude &amp; Longitude:</p>
-      <p className="position coords">
-        <span className="latitude">{coords.latitude}, </span>{" "}
-        <span className="longitude">{coords.longitude}</span>
-      </p>
-    </div>
+    <>
+      {coords && (
+        <div>
+          <p>Your current Latitude &amp; Longitude:</p>
+          <p className="position coords">
+            <span className="latitude">{coords.latitude}, </span>{" "}
+            <span className="longitude">{coords.longitude}</span>
+          </p>
+        </div>
+      )}
+    </>
   );
 }
 
 function App() {
+  const currentDate = new Date();
   const { coords, error: locationError } = useGeolocation();
-  const { isFetching, moonData, error: moonError } = useMoonData(coords);
+  // 
+  const { isFetching, moonData, error: moonError } = useMoonData(currentDate.toISOString().split('T')[0], coords);
+
+  const dateFormatOptions = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  } as Intl.DateTimeFormatOptions;
 
   return (
     <>
       <Starfield />
       <div className="App">
         <header className="moon-phase-header">
-          <h1 className="has-text-gradient">Tonight&#39;s Lunar Phase</h1>
+          <h1 className="has-text-gradient">Tonight&#39;s Lunar Phase</h1> 
         </header>
         {isFetching && <Loader />}
         {!isFetching && (
@@ -39,10 +52,10 @@ function App() {
             {!Boolean(moonError) && moonData && (
               <>
                 <div className="moon-phase-title has-text-gradient">
-                  {moonData.phase_name}
+                  {moonData.properties.data.curphase}
                 </div>
                 <p className="percentage">
-                  Percent Illuminated: {moonData.illumination}
+                  Percent Illuminated: {moonData.properties.data.fracillum}
                 </p>
                 <Moon moonData={moonData} />
               </>
@@ -58,6 +71,7 @@ function App() {
           </>
         )}
         <div>
+          <p className="date">{currentDate.toLocaleDateString(undefined, dateFormatOptions)}</p>
           <a
             href="https://github.com/kencrocken/lunar_phase"
             className="github-link"

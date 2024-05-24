@@ -1,41 +1,40 @@
 import { useEffect, useState } from "react";
-import type { Location, Moon as MoonAPIData, MoonApi } from "../moonApi.types";
+import type { Location } from "../moonApi.types";
+import type { NavalMoonAPI } from "../navalApi.types";
 
-export const useMoonData = (coords: Location) => {
+export const useMoonData = (currentDate: string, coords?: Location) => {
   const [isFetching, setFetchingData] = useState<boolean>(true);
-  const [moonData, setMoonData] = useState<MoonAPIData>();
+  const [moonData, setMoonData] = useState<NavalMoonAPI>();
   const [error, setError] = useState<string>();
   
-  const url = 'https://moon-phase.p.rapidapi.com/advanced';
-
-
+  const url = 'https://ald76uu0g6.execute-api.us-east-1.amazonaws.com/project/lunarphase';
+  
   useEffect(() => {
     const options = {
       method: 'GET',
       headers: {
-        'X-RapidAPI-Key': process.env.REACT_APP_MOON_API_KEY || '',
-        'X-RapidAPI-Host': 'moon-phase.p.rapidapi.com'
+        'latitude': `${coords?.latitude}` || '',
+        'longitude': `${coords?.longitude}` || '',
+        'current-date': currentDate,
       },
     };
 
     const fetchData = async () => {
-    try {
-      // Default to Baltimore, MD
-      const latitude = coords?.latitude ? coords.latitude : "39.0963965";
-      const longitude = coords?.longitude ? coords.longitude : "-76.8590672";
-      const response = await fetch(`${url}?lat=${latitude}&lon=${longitude}`, options);
-      const result: MoonApi = await response.json();
-      setMoonData(result.moon); 
-      setFetchingData(false);
-    } catch (error: any) {
-      console.error(error);
-      setError(error.message);
-      setFetchingData(false);
-    } 
-  };
-  fetchData();
-  }, [coords.latitude, coords.longitude])
+      try {
+        const response = await fetch(url, options);
+        const result = await response.json();
+        setMoonData(result); 
+        setFetchingData(false);
+      } catch (error: any) {
+        console.error(error);
+        setError(error.message as string);
+        setFetchingData(false);
+      } 
+    };
 
-
-  return { isFetching, moonData, error }
+    if (coords !== undefined && currentDate){
+      fetchData();
+    }
+  }, [coords, currentDate]);
+  return { isFetching, moonData, error };
 };
