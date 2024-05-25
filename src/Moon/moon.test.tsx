@@ -1,33 +1,52 @@
 import { render, screen } from '@testing-library/react';
 import { Moon } from './moon';
 import { NavalMoonAPI } from '../navalApi.types';
+import { MOON_DEFAULTS } from './moon.constants';
 
-test('renders moon component with correct outer color', () => {
-  const moonData = {
+describe('Moon Component with less than 50% illumination', () => {
+  const moonData49Illumination = {
     properties: {
       data: {
-        fracillum: '50',
+        fracillum: '49',
         curphase: 'Waxing Crescent'
       }
     }
   };
-  render(<Moon moonData={moonData as NavalMoonAPI} />);
-  const outerBox = screen.getByTestId('outer-box');
-  expect(outerBox).toHaveStyle({ backgroundColor: 'rgb(51, 51, 51)' });
+
+  test('renders moon component with correct outer color', () => {
+    render(<Moon moonData={moonData49Illumination as NavalMoonAPI} />);
+    const outerBox = screen.getByTestId('outer-box');
+    expect(outerBox).toHaveStyle({ backgroundColor: MOON_DEFAULTS.lightColor });
+  });
+
+  test('renders moon component with correct inner color', () => {
+    render(<Moon moonData={moonData49Illumination as NavalMoonAPI} />);
+    const innerBox = screen.getByTestId('inner-box');
+    expect(innerBox).toHaveStyle({ backgroundColor: MOON_DEFAULTS.shadowColor });
+  });
 });
 
-test('renders moon component with correct inner color', () => {
-  const moonData = {
+describe('Moon Component with greater than 50% illumination', () => {
+  const moonData51Illumination = {
     properties: {
       data: {
-        fracillum: '50',
+        fracillum: '51',
         curphase: 'Waxing Crescent'
       }
     }
   };
-  render(<Moon moonData={moonData as NavalMoonAPI} />);
-  const innerBox = screen.getByTestId('inner-box');
-  expect(innerBox).toHaveStyle({ backgroundColor: 'rgb(230, 230, 230)' });
+
+  test('renders moon component with correct outer color', () => {
+    render(<Moon moonData={moonData51Illumination as NavalMoonAPI} />);
+    const outerBox = screen.getByTestId('outer-box');
+    expect(outerBox).toHaveStyle({ backgroundColor: MOON_DEFAULTS.shadowColor });
+  });
+
+  test('renders moon component with correct inner color', () => {
+    render(<Moon moonData={moonData51Illumination as NavalMoonAPI} />);
+    const innerBox = screen.getByTestId('inner-box');
+    expect(innerBox).toHaveStyle({ backgroundColor: MOON_DEFAULTS.lightColor });
+  });
 });
 
 test('renders moon component with correct diameter', () => {
