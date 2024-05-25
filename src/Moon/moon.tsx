@@ -1,4 +1,4 @@
-import './moon.scss';
+import { MoonWrapper, OuterMoon, InnerMoon } from './moon.styledComponents';
 import type { NavalMoonAPI } from '../navalApi.types';
 import { MOON_DEFAULTS } from './moon.constants';
 
@@ -50,29 +50,20 @@ export const Moon = ({ moonData }: {moonData: NavalMoonAPI}) => {
   const innerColor = phase.inner;
   const outerColor = phase.outer;
 
-  const outerBoxStyles = {
-    height: `${MOON_DEFAULTS.diameter}px`,
-    width: `${MOON_DEFAULTS.diameter}px`,
-    backgroundColor: outerColor,
-    borderRadius: `${MOON_DEFAULTS.diameter/2}px`,
-  } as React.CSSProperties;
-
-  const innerBoxStyles = {
-    backgroundColor: innerColor,
-    borderRadius: `${ blurredDiameter/2 }px`,
-    height: `${ blurredDiameter }px`,
-    width: `${ blurredDiameter }px`,
-    left: `${ blurredOffset }px`,
-    top: `${ ((MOON_DEFAULTS.diameter-blurredDiameter)/2) }px`,
-    boxShadow: `0px 0px ${ MOON_DEFAULTS.blur }px ${ MOON_DEFAULTS.blur }px ${ innerColor }`,
-    opacity: 1 - MOON_DEFAULTS.earthshine,
-  } as React.CSSProperties;
-
-  return (
-    <div className="moon-wrapper">
-      <div data-testid="outer-box" className="outer" style={outerBoxStyles}>
-        <div data-testid="inner-box" className="inner" style={innerBoxStyles}></div>
-      </div>
-    </div>
+  return(
+    <MoonWrapper>
+      <OuterMoon data-testid="outer-box" $outerDiameter={MOON_DEFAULTS.diameter} $outerColor={outerColor}>
+        <InnerMoon 
+          data-testid="inner-box" 
+          $moonDiameter={MOON_DEFAULTS.diameter}
+          $innerDiameter={MOON_DEFAULTS.diameter-blurredDiameter} 
+          $blurredDiameter={blurredDiameter} 
+          $blurredOffset={blurredOffset}
+          $innerColor={innerColor}
+          $blurDefault={MOON_DEFAULTS.blur}
+          $earthshineDefault={MOON_DEFAULTS.earthshine}
+        />
+      </OuterMoon>
+    </MoonWrapper>
   );
 }
