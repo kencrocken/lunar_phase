@@ -3,7 +3,7 @@ import type { Location } from "../moonApi.types";
 
 export const useGeolocation = () => {
   const [coords, setCoords] = useState<Location>();
-  const [error, setError] = useState();
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
