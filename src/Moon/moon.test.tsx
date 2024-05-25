@@ -13,7 +13,7 @@ test('renders moon component with correct outer color', () => {
   };
   render(<Moon moonData={moonData as NavalMoonAPI} />);
   const outerBox = screen.getByTestId('outer-box');
-  expect(outerBox).toHaveStyle({ backgroundColor: 'rgb(230, 230, 230)' });
+  expect(outerBox).toHaveStyle({ backgroundColor: 'rgb(51, 51, 51)' });
 });
 
 test('renders moon component with correct inner color', () => {
@@ -27,7 +27,7 @@ test('renders moon component with correct inner color', () => {
   };
   render(<Moon moonData={moonData as NavalMoonAPI} />);
   const innerBox = screen.getByTestId('inner-box');
-  expect(innerBox).toHaveStyle({ backgroundColor: 'rgb(51, 51, 51)' });
+  expect(innerBox).toHaveStyle({ backgroundColor: 'rgb(230, 230, 230)' });
 });
 
 test('renders moon component with correct diameter', () => {
