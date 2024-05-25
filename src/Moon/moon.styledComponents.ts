@@ -22,7 +22,6 @@ const OuterMoon = styled.div<{ $outerDiameter: number, $outerColor: string }>`
 
 const InnerMoon = styled.div<{ 
   $moonDiameter: number,
-  $innerDiameter: number,
   $blurredDiameter: number,
   $blurredOffset: number,
   $innerColor: string,
@@ -30,7 +29,7 @@ const InnerMoon = styled.div<{
   $earthshineDefault: number
 }>`
   position: absolute;
-  ${({ $moonDiameter, $innerDiameter, $blurredDiameter, $blurredOffset, $innerColor, $blurDefault, $earthshineDefault }) => `
+  ${({ $moonDiameter, $blurredDiameter, $blurredOffset, $innerColor, $blurDefault, $earthshineDefault }) => `
     background-color: ${$innerColor};
     border-radius: ${$blurredDiameter/2}px;
     height: ${$blurredDiameter}px;

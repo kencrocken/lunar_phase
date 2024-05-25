@@ -56,7 +56,6 @@ export const Moon = ({ moonData }: {moonData: NavalMoonAPI}) => {
         <InnerMoon 
           data-testid="inner-box" 
           $moonDiameter={MOON_DEFAULTS.diameter}
-          $innerDiameter={MOON_DEFAULTS.diameter-blurredDiameter} 
           $blurredDiameter={blurredDiameter} 
           $blurredOffset={blurredOffset}
           $innerColor={innerColor}
