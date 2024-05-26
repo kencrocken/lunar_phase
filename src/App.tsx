@@ -39,7 +39,7 @@ const DisplayCoordinates = ({ coords }: { coords?: Location }) => {
       {coords && (
         <div>
           <p>Your current Latitude &amp; Longitude:</p>
-          <p className="position coords">
+          <p>
             <span className="latitude">{coords.latitude}, </span>{" "}
             <span className="longitude">{coords.longitude}</span>
           </p>

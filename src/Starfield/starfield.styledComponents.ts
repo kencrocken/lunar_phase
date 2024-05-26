@@ -30,8 +30,10 @@ const Stars = styled.div<{size: number, shadowCount: number}>`
     width: ${size}px;
     height: ${size}px;
     box-shadow: ${generateBoxShadow(shadowCount)};
-    animation: ${starAnimation} ${225 - (size * 50)}s linear infinite;
+    animation: ${starAnimation} ${size * 50}s linear infinite;
     &:after {
+      postion: absolute;
+      top: 2000px;
       width: ${size}px;
       height: ${size}px;
       box-shadow: ${generateBoxShadow(shadowCount)};
