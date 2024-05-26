@@ -14,7 +14,8 @@ export const useGeolocation = () => {
         });
       },
       (error: any) => {
-        setError(error);
+        setCoords({ latitude: 39.29, longitude: -76.612 }) // Default to Baltimore, MD
+        setError(error.message);
       }
     );
   }, []);
