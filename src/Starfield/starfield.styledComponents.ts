@@ -19,24 +19,24 @@ const starAnimation = keyframes`
   }
 `;
 
-const Stars = styled.div<{size: number, shadowCount: number}>`
+const Stars = styled.div<{$size: number, $shadowCount: number}>`
   background: transparent;
   &:after {
     content: " ";
     position: absolute;
     background: transparent;
   }
-  ${({ size, shadowCount }: {size: number, shadowCount: number}) => css`
-    width: ${size}px;
-    height: ${size}px;
-    box-shadow: ${generateBoxShadow(shadowCount)};
-    animation: ${starAnimation} ${size * 50}s linear infinite;
+  ${({ $size, $shadowCount }: {$size: number, $shadowCount: number}) => css`
+    width: ${$size}px;
+    height: ${$size}px;
+    box-shadow: ${generateBoxShadow($shadowCount)};
+    animation: ${starAnimation} ${$size * 50}s linear infinite;
     &:after {
       postion: absolute;
       top: 2000px;
-      width: ${size}px;
-      height: ${size}px;
-      box-shadow: ${generateBoxShadow(shadowCount)};
+      width: ${$size}px;
+      height: ${$size}px;
+      box-shadow: ${generateBoxShadow($shadowCount)};
     }
   `}
 `;

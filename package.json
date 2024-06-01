@@ -4,6 +4,7 @@
   "homepage": "https://kencrocken.github.io/lunar_phase",
   "private": true,
   "dependencies": {
+    "@kencrocken/colorful-loader": "^1.0.9",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",

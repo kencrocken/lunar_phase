@@ -1,22 +1,16 @@
-import { FaGithub } from "react-icons/fa";
+import { FaGithub } from 'react-icons/fa';
+import { ColorfulLoader } from '@kencrocken/colorful-loader';
 
-import { Moon } from "./Moon/moon";
-import { Starfield } from "./Starfield/starfield";
-import { Loader } from "./Loader/loader";
+import { Moon } from './Moon/moon';
+import { Starfield } from './Starfield/starfield';
 
-import {
-  GlobalStyle,
-  Wrapper,
-  AppTitle,
-  MoonPhaseTitle,
-  RepoLink,
-} from "./App.styledComponents";
+import { GlobalStyle, Wrapper, AppTitle, MoonPhaseTitle, RepoLink } from './App.styledComponents';
 
-import type { Location } from "./moonApi.types";
-import type { NavalMoonAPI } from "./navalApi.types";
+import type { Location } from './moonApi.types';
+import type { NavalMoonAPI } from './navalApi.types';
 
-import { useGeolocation } from "./Hooks/useGeolocation";
-import { useMoonData } from "./Hooks/useMoonData";
+import { useGeolocation } from './Hooks/useGeolocation';
+import { useMoonData } from './Hooks/useMoonData';
 
 const DisplayMoonPhase = ({ moonData }: { moonData: NavalMoonAPI }) => (
   <>
@@ -40,8 +34,7 @@ const DisplayCoordinates = ({ coords }: { coords?: Location }) => {
         <div>
           <p>Your current Latitude &amp; Longitude:</p>
           <p>
-            <span className="latitude">{coords.latitude}, </span>{" "}
-            <span className="longitude">{coords.longitude}</span>
+            <span className="latitude">{coords.latitude}, </span> <span className="longitude">{coords.longitude}</span>
           </p>
         </div>
       )}
@@ -51,19 +44,16 @@ const DisplayCoordinates = ({ coords }: { coords?: Location }) => {
 
 const Footer = ({ currentDate }: { currentDate: Date }) => {
   const dateFormatOptions = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
   } as Intl.DateTimeFormatOptions;
 
   return (
     <div>
       <p>{currentDate.toLocaleDateString(undefined, dateFormatOptions)}</p>
-      <RepoLink
-        href="https://github.com/kencrocken/lunar_phase"
-        aria-label="View source on GitHub"
-      >
+      <RepoLink href="https://github.com/kencrocken/lunar_phase" aria-label="View source on GitHub">
         <FaGithub />
       </RepoLink>
     </div>
@@ -73,11 +63,7 @@ const Footer = ({ currentDate }: { currentDate: Date }) => {
 function App() {
   const currentDate = new Date();
   const { coords, error: locationError } = useGeolocation();
-  const {
-    isFetching,
-    moonData,
-    error: moonError,
-  } = useMoonData(currentDate.toISOString().split("T")[0], coords);
+  const { isFetching, moonData, error: moonError } = useMoonData(currentDate.toISOString().split('T')[0], coords);
 
   return (
     <>
@@ -88,7 +74,9 @@ function App() {
           <AppTitle>Tonight&#39;s Lunar Phase</AppTitle>
         </header>
         {isFetching ? (
-          <Loader />
+          <>
+            <ColorfulLoader />
+          </>
         ) : (
           <>
             {!moonError && moonData && <DisplayMoonPhase moonData={moonData} />}
