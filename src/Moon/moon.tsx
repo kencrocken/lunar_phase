@@ -1,5 +1,5 @@
 import { MoonWrapper, OuterMoon, InnerMoon } from './moon.styledComponents';
-import type { NavalMoonAPI } from '../navalApi.types';
+import type { NavalMoonAPI } from '../Types/navalApi.types';
 import { MOON_DEFAULTS } from './moon.constants';
 
 /**

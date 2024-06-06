@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import type { Location } from "../moonApi.types";
+import type { Location } from "../Types/moonApi.types";
 
 export const useGeolocation = () => {
   const [coords, setCoords] = useState<Location>();

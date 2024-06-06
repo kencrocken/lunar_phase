@@ -1,3 +1,9 @@
+/**
+ * MoonApi is pretty nice and returns a lot of information about the moon.
+ * But, there was an issue with timezones and the data was not accurate.
+ * Still keeping it around in case it gets fixed.
+ */
+
 export type MoonApi = {
     timestamp:   number;
     datestamp:   string;

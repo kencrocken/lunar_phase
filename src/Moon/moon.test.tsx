@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { Moon } from './moon';
-import { NavalMoonAPI } from '../navalApi.types';
+import { NavalMoonAPI } from '../Types/navalApi.types';
 import { MOON_DEFAULTS } from './moon.constants';
 
 describe('Moon Component with less than 50% illumination', () => {
@@ -8,9 +8,9 @@ describe('Moon Component with less than 50% illumination', () => {
     properties: {
       data: {
         fracillum: '49',
-        curphase: 'Waxing Crescent'
-      }
-    }
+        curphase: 'Waxing Crescent',
+      },
+    },
   };
 
   test('renders moon component with correct outer color', () => {
@@ -31,9 +31,9 @@ describe('Moon Component with greater than 50% illumination', () => {
     properties: {
       data: {
         fracillum: '51',
-        curphase: 'Waxing Crescent'
-      }
-    }
+        curphase: 'Waxing Crescent',
+      },
+    },
   };
 
   test('renders moon component with correct outer color', () => {
@@ -54,9 +54,9 @@ test('renders moon component with correct diameter', () => {
     properties: {
       data: {
         fracillum: '50',
-        curphase: 'Waxing Crescent'
-      }
-    }
+        curphase: 'Waxing Crescent',
+      },
+    },
   };
   render(<Moon moonData={moonData as NavalMoonAPI} />);
   const outerBox = screen.getByTestId('outer-box');

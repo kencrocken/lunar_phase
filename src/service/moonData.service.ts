@@ -1,4 +1,4 @@
-import type { NavalMoonAPI } from '../navalApi.types';
+import type { NavalMoonAPI } from '../Types/navalApi.types';
 
 const url = 'https://ald76uu0g6.execute-api.us-east-1.amazonaws.com/project/lunarphase';
 

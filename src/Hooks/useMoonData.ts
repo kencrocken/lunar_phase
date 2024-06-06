@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 
-import { fetchMoonData } from '../service/moonData.service';
+import { fetchMoonData } from '../Service/moonData.service';
 
-import type { Location } from "../moonApi.types";
-import type { NavalMoonAPI } from "../navalApi.types";
+import type { Location } from "../Types/moonApi.types";
+import type { NavalMoonAPI } from "../Types/navalApi.types";
 
 export const useMoonData = (currentDate: string, coords?: Location) => {
   const [isFetching, setFetchingData] = useState<boolean>(true);

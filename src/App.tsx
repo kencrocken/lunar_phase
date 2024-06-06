@@ -6,8 +6,8 @@ import { Starfield } from './Starfield/starfield';
 
 import { GlobalStyle, Wrapper, AppTitle, MoonPhaseTitle, RepoLink, ColorfulLoaderWrapper } from './App.styledComponents';
 
-import type { Location } from './moonApi.types';
-import type { NavalMoonAPI } from './navalApi.types';
+import type { Location } from './Types/moonApi.types';
+import type { NavalMoonAPI } from './Types/navalApi.types';
 
 import { useGeolocation } from './Hooks/useGeolocation';
 import { useMoonData } from './Hooks/useMoonData';
