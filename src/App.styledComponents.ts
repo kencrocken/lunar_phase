@@ -30,6 +30,11 @@ const Wrapper = styled.div`
   right: 0;
 `;
 
+const ColorfulLoaderWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
 const gradient = `  
   background: -webkit-linear-gradient(white, #38495a);
   -webkit-background-clip: text;
@@ -58,4 +63,4 @@ const RepoLink = styled.a`
     color: white;
   }
 `;
-export { GlobalStyle, Wrapper, AppTitle, MoonPhaseTitle, RepoLink }
+export { GlobalStyle, Wrapper, AppTitle, MoonPhaseTitle, RepoLink, ColorfulLoaderWrapper }

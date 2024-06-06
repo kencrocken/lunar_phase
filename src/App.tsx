@@ -4,7 +4,7 @@ import { ColorfulLoader } from '@kencrocken/colorful-loader';
 import { Moon } from './Moon/moon';
 import { Starfield } from './Starfield/starfield';
 
-import { GlobalStyle, Wrapper, AppTitle, MoonPhaseTitle, RepoLink } from './App.styledComponents';
+import { GlobalStyle, Wrapper, AppTitle, MoonPhaseTitle, RepoLink, ColorfulLoaderWrapper } from './App.styledComponents';
 
 import type { Location } from './moonApi.types';
 import type { NavalMoonAPI } from './navalApi.types';
@@ -74,9 +74,9 @@ function App() {
           <AppTitle>Tonight&#39;s Lunar Phase</AppTitle>
         </header>
         {isFetching ? (
-          <>
+          <ColorfulLoaderWrapper>
             <ColorfulLoader />
-          </>
+          </ColorfulLoaderWrapper>
         ) : (
           <>
             {!moonError && moonData && <DisplayMoonPhase moonData={moonData} />}
