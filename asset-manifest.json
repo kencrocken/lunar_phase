@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/lunar_phase/static/js/main.eaf565be.js",
+    "main.js": "/lunar_phase/static/js/main.41faa6b1.js",
     "index.html": "/lunar_phase/index.html",
-    "main.eaf565be.js.map": "/lunar_phase/static/js/main.eaf565be.js.map"
+    "main.41faa6b1.js.map": "/lunar_phase/static/js/main.41faa6b1.js.map"
   },
   "entrypoints": [
-    "static/js/main.eaf565be.js"
+    "static/js/main.41faa6b1.js"
   ]
 }
