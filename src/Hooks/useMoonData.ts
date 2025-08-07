@@ -8,7 +8,7 @@ export const useMoonData = (currentDate: string, coords?: Location) => {
   const [isFetching, setFetchingData] = useState<boolean>(true);
   const [moonData, setMoonData] = useState<MoonApi>();
   const [error, setError] = useState<string>();
-
+  console.log(moonData?.moon.major_phase);
   useEffect(() => {
     const options = {
       latitude: `${coords?.latitude}` || '',
