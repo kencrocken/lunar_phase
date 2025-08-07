@@ -1,6 +1,6 @@
 import { MoonWrapper, OuterMoon, InnerMoon } from './moon.styledComponents';
-import type { NavalMoonAPI } from '../Types/navalApi.types';
 import { MOON_DEFAULTS } from './moon.constants';
+import { MoonApi } from '../Types/moonApi.types';
 
 /**
  * Represents the Moon component.
@@ -8,7 +8,7 @@ import { MOON_DEFAULTS } from './moon.constants';
  * @param moonData The data object containing information about the moon.
  * @returns The Moon component.
  */
-export const Moon = ({ moonData }: { moonData: NavalMoonAPI }) => {
+export const Moon = ({ moonData }: { moonData: MoonApi }) => {
   /**
    * Determines the phase of the moon based on the given illumination and current phase.
    * @param percentIlluminated The illumination value of the moon.
@@ -47,8 +47,8 @@ export const Moon = ({ moonData }: { moonData: NavalMoonAPI }) => {
     };
   };
 
-  const percentIlluminated = parseInt(moonData.properties.data.fracillum) / 100;
-  const phase = setPhase(percentIlluminated, moonData.properties.data.curphase);
+  const percentIlluminated = parseInt(moonData.moon.illumination) / 100;
+  const phase = setPhase(percentIlluminated, moonData.moon.phase_name);
   const innerDiameter = calcInner(phase.illumination * 2);
   const blurredDiameter = innerDiameter.d - MOON_DEFAULTS.blur;
   const blurredOffset = innerDiameter.o + MOON_DEFAULTS.blur / 2;

@@ -6,16 +6,15 @@ import { Starfield } from './Starfield/starfield';
 
 import { GlobalStyle, Wrapper, AppTitle, MoonPhaseTitle, RepoLink, ColorfulLoaderWrapper } from './App.styledComponents';
 
-import type { Location } from './Types/moonApi.types';
-import type { NavalMoonAPI } from './Types/navalApi.types';
+import type { Location, MoonApi } from './Types/moonApi.types';
 
 import { useGeolocation } from './Hooks/useGeolocation';
 import { useMoonData } from './Hooks/useMoonData';
 
-const DisplayMoonPhase = ({ moonData }: { moonData: NavalMoonAPI }) => (
+const DisplayMoonPhase = ({ moonData }: { moonData: MoonApi }) => (
   <>
-    <MoonPhaseTitle>{moonData.properties.data.curphase}</MoonPhaseTitle>
-    <p>Percent Illuminated: {moonData.properties.data.fracillum}</p>
+    <MoonPhaseTitle>{moonData.moon.major_phase}</MoonPhaseTitle>
+    <p>Percent Illuminated: {moonData.moon.detailed.illumination_details.percentage}</p>
     <Moon moonData={moonData} />
   </>
 );
