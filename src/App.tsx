@@ -13,7 +13,7 @@ import { useMoonData } from './Hooks/useMoonData';
 
 const DisplayMoonPhase = ({ moonData }: { moonData: MoonApi }) => (
   <>
-    <MoonPhaseTitle>{moonData.moon.major_phase}</MoonPhaseTitle>
+    <MoonPhaseTitle>{moonData.moon.phase_name}</MoonPhaseTitle>
     <p>Percent Illuminated: {moonData.moon.detailed.illumination_details.percentage}</p>
     <Moon moonData={moonData} />
   </>
