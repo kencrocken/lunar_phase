@@ -1,6 +1,5 @@
 import { MoonWrapper, OuterMoon, InnerMoon } from './moon.styledComponents';
 import { MOON_DEFAULTS } from './moon.constants';
-import { MoonApi } from '../Types/moonApi.types';
 
 /**
  * Represents the Moon component.
