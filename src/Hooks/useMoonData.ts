@@ -4,11 +4,11 @@ import { fetchMoonData } from '../Service/moonData.service';
 
 import type { Location, MoonApi } from '../Types/moonApi.types';
 
-export const useMoonData = (currentDate: string, coords?: Location) => {
-  const [isFetching, setFetchingData] = useState<boolean>(true);
+export const useMoonData = () => {
+  const [isFetching, setFetchingData] = useState<boolean>(false);
   const [moonData, setMoonData] = useState<MoonApi>();
   const [error, setError] = useState<string>();
-  useEffect(() => {
+  const triggerFetchMoonData = (currentDate: string, coords?: Location) => {
     const options = {
       latitude: `${coords?.latitude}` || '',
       longitude: `${coords?.longitude}` || '',
@@ -16,12 +16,19 @@ export const useMoonData = (currentDate: string, coords?: Location) => {
     };
 
     const fetchData = async () => {
+      setFetchingData(true);
       try {
         const result = await fetchMoonData(options);
         setMoonData(result);
-        setFetchingData(false);
-      } catch (error: any) {
-        setError(error.message);
+      } catch (error: unknown) {
+        const handleUnknownError = (error: unknown): string => {
+          if (error instanceof Error) {
+            return error.message; 
+          }
+          return "An unknown error occurred.";
+        };
+        setError(handleUnknownError(error));
+      } finally {
         setFetchingData(false);
       }
     };
@@ -29,7 +36,7 @@ export const useMoonData = (currentDate: string, coords?: Location) => {
     if (coords !== undefined && currentDate) {
       fetchData();
     }
-  }, [coords, currentDate]);
-  console.log('useMoonData', { isFetching, moonData, error });
-  return { isFetching, moonData, error };
+  }
+
+  return { triggerFetchMoonData, isFetching, moonData, error };
 };

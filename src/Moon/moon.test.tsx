@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { Moon } from './moon';
 import { MOON_DEFAULTS } from './moon.constants';
 import { MoonApi } from '../Types/moonApi.types';
@@ -147,82 +147,46 @@ const mock_MoonData = {
     },
   },
 };
+
 describe('Moon Component with less than 50% illumination', () => {
   const mock_MoonData_lessThan50: MoonApi = {
     ...mock_MoonData,
     major_phase: 'Waxing Crescent',
-    detailed: {
-      illumination: {
-        percentage: 45,
-        visible_fraction: 0.45,
-        phase_angle: 161.33,
-      },
-      events: {
-        moonrise_visible: false,
-        moonset_visible: true,
-        optimal_viewing_period: {
-          start_time: '21:15',
-          end_time: '01:15',
-          duration_hours: 4,
-          viewing_quality: 'Good for crater observation along terminator',
-          recommendations: [
-            'High in sky during evening hours',
-            'Excellent time to observe crater shadows along terminator line',
-            'Medium to high magnification recommended for detail',
-          ],
-        },
-      },
-    },
+    illumination: '45%',
   } as MoonApi;
 
-  test('renders moon component with correct outer color', () => {
-    render(<Moon moonData={mock_MoonData_lessThan50 as MoonApi} />);
-    const outerBox = screen.getByTestId('outer-box');
-    expect(outerBox).toHaveStyle({ backgroundColor: MOON_DEFAULTS.lightColor });
+  test('renders moon component with correct outer color', async () => {
+    render(<Moon phaseName='Waxing Crescent' illumination='45%' />);
+    await waitFor(() => {
+      const outerBox = screen.getByTestId('outer-box');
+      expect(outerBox).toHaveStyle({ backgroundColor: MOON_DEFAULTS.lightColor });
+    });
   });
 
   test('renders moon component with correct inner color', () => {
-    render(<Moon moonData={mock_MoonData_lessThan50 as MoonApi} />);
+    render(<Moon phaseName='Waxing Crescent' illumination='45%' />);
     const innerBox = screen.getByTestId('inner-box');
     expect(innerBox).toHaveStyle({ backgroundColor: MOON_DEFAULTS.shadowColor });
   });
 });
 
 describe('Moon Component with greater than 50% illumination', () => {
-  const mock_MoonData_greaterThan50: MoonApi = {
-    ...mock_MoonData,
-    major_phase: 'Waxing Crescent',
-    detailed: {
-      illumination: {
-        percentage: 55,
-      },
-    },
-  } as MoonApi;
-
   test('renders moon component with correct outer color', () => {
-    render(<Moon moonData={mock_MoonData_greaterThan50} />);
+    render(<Moon phaseName="Waxing Gibbous" illumination="55%" />);
     const outerBox = screen.getByTestId('outer-box');
     expect(outerBox).toHaveStyle({ backgroundColor: MOON_DEFAULTS.shadowColor });
   });
 
   test('renders moon component with correct inner color', () => {
-    render(<Moon moonData={mock_MoonData_greaterThan50} />);
+    render(<Moon phaseName="Waxing Gibbous" illumination="55%" />);
     const innerBox = screen.getByTestId('inner-box');
+
     expect(innerBox).toHaveStyle({ backgroundColor: MOON_DEFAULTS.lightColor });
   });
 });
 
 test('renders moon component with correct diameter', () => {
-  const moonData = {
-    ...mock_MoonData,
-    major_phase: 'Waxing Crescent',
-    detailed: {
-      illumination: {
-        percentage: 50,
-      },
-    },
-  } as MoonApi;
-  render(<Moon moonData={moonData} />);
+  render(<Moon phaseName="Waxing Crescent" illumination="50%" />);
   const outerBox = screen.getByTestId('outer-box');
-  expect(outerBox).toHaveStyle({ height: '200px', width: '200px' });
+  expect(outerBox).toHaveStyle({ height: `${MOON_DEFAULTS.diameter}px`, width: `${MOON_DEFAULTS.diameter}px` });
 });

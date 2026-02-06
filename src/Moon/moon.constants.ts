@@ -1,5 +1,5 @@
 export const MOON_DEFAULTS = {
-  diameter: 200,
+  diameter: 100,
   shadowColor: "rgb(51, 51, 51)",
   lightColor: "rgb(230, 230, 230)",
   earthshine: 0.1,

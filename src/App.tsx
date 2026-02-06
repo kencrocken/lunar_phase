@@ -4,18 +4,19 @@ import { ColorfulLoader } from '@kencrocken/colorful-loader';
 import { Moon } from './Moon/moon';
 import { Starfield } from './Starfield/starfield';
 
-import { GlobalStyle, Wrapper, AppTitle, MoonPhaseTitle, RepoLink, ColorfulLoaderWrapper } from './App.styledComponents';
+import { GlobalStyle, Wrapper, AppTitle, AppFooter, MoonPhaseTitle, RepoLink, ColorfulLoaderWrapper, GradiantButton } from './App.styledComponents';
 
-import type { Location, MoonApi } from './Types/moonApi.types';
-
+import type { Location } from './Types/moonApi.types';
+import { titleCase } from './Utils/string.utils';
 import { useGeolocation } from './Hooks/useGeolocation';
 import { useMoonData } from './Hooks/useMoonData';
+import { useState } from 'react';
 
-const DisplayMoonPhase = ({ moonData }: { moonData: MoonApi }) => (
+const DisplayMoonPhase = ({ phaseName, illumination}: { phaseName: string, illumination: string }) => (
   <>
-    <MoonPhaseTitle>{moonData.moon.phase_name}</MoonPhaseTitle>
-    <p>Percent Illuminated: {moonData.moon.detailed.illumination_details.percentage}</p>
-    <Moon moonData={moonData} />
+    <MoonPhaseTitle>{titleCase(phaseName)}</MoonPhaseTitle>
+    <Moon phaseName={phaseName} illumination={illumination} />
+    <p>Percent Illuminated: {illumination}</p>
   </>
 );
 
@@ -41,29 +42,29 @@ const DisplayCoordinates = ({ coords }: { coords?: Location }) => {
   );
 };
 
-const Footer = ({ currentDate }: { currentDate: Date }) => {
-  const dateFormatOptions = {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  } as Intl.DateTimeFormatOptions;
-
-  return (
-    <div>
-      <p>{currentDate.toLocaleDateString(undefined, dateFormatOptions)}</p>
-      <RepoLink href="https://github.com/kencrocken/lunar_phase" aria-label="View source on GitHub">
-        <FaGithub />
-      </RepoLink>
-    </div>
-  );
-};
+const dateFormatOptions = {
+  weekday: 'long',
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+} as Intl.DateTimeFormatOptions;
 
 function App() {
   const currentDate = new Date();
-  const { coords, error: locationError } = useGeolocation();
-  const { isFetching, moonData, error: moonError } = useMoonData(currentDate.toISOString().split('T')[0], coords);
+  const [coords, setCoords] = useState<Location>();
+  const { triggerGeolocation, isFetching: isFetchingLocation, error: locationError } = useGeolocation();
+  const { triggerFetchMoonData, moonData, isFetching: isFetchingMoonData, error: moonError } = useMoonData();
 
+  const handleTriggerGeolocation = async() => {
+    try {
+      const coords = await triggerGeolocation();
+      setCoords(coords);
+      triggerFetchMoonData(currentDate.toISOString(), coords);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const isFetching = isFetchingLocation || isFetchingMoonData;
   return (
     <>
       <GlobalStyle />
@@ -71,20 +72,28 @@ function App() {
       <Wrapper>
         <header>
           <AppTitle>Tonight&#39;s Lunar Phase</AppTitle>
+          <p>{currentDate.toLocaleDateString(undefined, dateFormatOptions)}</p>
         </header>
-        {isFetching ? (
+        {!coords && !isFetching && (
+          <GradiantButton onClick={handleTriggerGeolocation}>Get Geolocation</GradiantButton>
+        )}
+        {!isFetchingLocation && isFetchingMoonData && (
+          <p>Fetching moon data...</p>
+        )}
+        {isFetching && (
           <ColorfulLoaderWrapper>
             <ColorfulLoader />
           </ColorfulLoaderWrapper>
-        ) : (
-          <>
-            {!moonError && moonData && <DisplayMoonPhase moonData={moonData} />}
-            {moonError && <p>{moonError}</p>}
-            {!locationError && <DisplayCoordinates coords={coords} />}
-            {locationError && <LocationError locationError={locationError} />}
-          </>
         )}
-        <Footer currentDate={currentDate} />
+        {!moonError && moonData && <DisplayMoonPhase phaseName={moonData.moon.phase_name} illumination={moonData.moon.illumination} />}
+        {moonError && <p>{moonError}</p>}
+        {!locationError && <DisplayCoordinates coords={coords} />}
+        {locationError && <LocationError locationError={locationError} />}
+        <AppFooter>
+          <RepoLink href="https://github.com/kencrocken/lunar_phase" aria-label="View source on GitHub">
+            <FaGithub />
+          </RepoLink>
+        </AppFooter>
       </Wrapper>
     </>
   );

@@ -5,10 +5,11 @@ import { MoonApi } from '../Types/moonApi.types';
 /**
  * Represents the Moon component.
  * Based on https://github.com/codebox/js-planet-phase
- * @param moonData The data object containing information about the moon.
+ * @param phaseName  The name of the phase of the moon.
+ * @param illumination The illumination value of the moon.
  * @returns The Moon component.
  */
-export const Moon = ({ moonData }: { moonData: MoonApi }) => {
+export const Moon = ({ phaseName, illumination }: { phaseName: string, illumination: string }) => {
   /**
    * Determines the phase of the moon based on the given illumination and current phase.
    * @param percentIlluminated The illumination value of the moon.
@@ -47,8 +48,8 @@ export const Moon = ({ moonData }: { moonData: MoonApi }) => {
     };
   };
 
-  const percentIlluminated = parseInt(moonData.moon.illumination) / 100;
-  const phase = setPhase(percentIlluminated, moonData.moon.phase_name);
+  const percentIlluminated = parseInt(illumination.replace('%', ''), 10) / 100;
+  const phase = setPhase(percentIlluminated, phaseName);
   const innerDiameter = calcInner(phase.illumination * 2);
   const blurredDiameter = innerDiameter.d - MOON_DEFAULTS.blur;
   const blurredOffset = innerDiameter.o + MOON_DEFAULTS.blur / 2;

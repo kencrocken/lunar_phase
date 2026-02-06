@@ -1,12 +1,34 @@
 import styled, { createGlobalStyle } from 'styled-components';
+import { lightenHex } from './Utils/color.utils';
+
+export const gradientBackground = `
+  transition: --radial-bkgd-start-color 0.5s ease-in-out, --radial-bkgd-end-color 0.5s ease-in-out;
+  background-image: radial-gradient(ellipse at bottom, var(--radial-bkgd-start-color) 0, var(--radial-bkgd-end-color) 100%);
+`;
 
 const GlobalStyle = createGlobalStyle`
+  @property --radial-bkgd-start-color {
+    syntax: '<color>';
+    initial-value: #1b2735;
+    inherits: false;
+  }
+
+  @property --radial-bkgd-end-color {
+    syntax: '<color>';
+    initial-value: #090a0f;
+    inherits: false;
+  }
+
+  :root {
+    --radial-bkgd-start-color: #1b2735;
+    --radial-bkgd-end-color: #090a0f;
+  }
   body, #root {
     height: 100vh;
   }
 
   body {
-    background: radial-gradient(ellipse at bottom, #1b2735 0, #090a0f 100%);
+    ${gradientBackground}
     overflow: hidden;
     font-family: 'Lato', sans-serif;
     color: white;
@@ -20,6 +42,7 @@ const GlobalStyle = createGlobalStyle`
     margin: 0 auto;
     max-width: 1300px;
     overflow: hidden;
+    
   }
 `;
 
@@ -35,24 +58,45 @@ const ColorfulLoaderWrapper = styled.div`
   justify-content: center;
 `;
 
-const gradient = `  
-  background: -webkit-linear-gradient(white, #38495a);
+const gradientText = `  
+  background: linear-gradient(white, #38495a);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent; 
 `;
 
+const GradiantButton = styled.button`
+  ${gradientBackground}
+  border: 2px solid #38495a;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 300;
+  letter-spacing: 1px;
+  color: white;
+  transition: --radial-bkgd-start-color 0.2s ease-in-out, --radial-bkgd-end-color 0.2s ease-in-out;
+  &:hover {
+    --radial-bkgd-start-color: ${lightenHex('#1b2735', 8)};
+    --radial-bkgd-end-color: ${lightenHex('#090a0f', 8)};
+    ${gradientBackground}
+  }
+`;
+
 const AppTitle = styled.h1`
-  ${gradient}
+  ${gradientText}
   letter-spacing: 0.75px;
 `;
 
 const MoonPhaseTitle = styled.div`
-  ${gradient}
+  ${gradientText}
   font-weight: 300;
-  font-size: 1.5rem;
-  letter-spacing: 1px;
-  text-shadow: 1px 1px 2px #38495a;
+  font-size: 1.75rem;
+  letter-spacing: 1.1px;
+`;
+
+const AppFooter = styled.div`
+  margin-top: 20px;
 `;
 
 const RepoLink = styled.a`
@@ -63,4 +107,14 @@ const RepoLink = styled.a`
     color: white;
   }
 `;
-export { GlobalStyle, Wrapper, AppTitle, MoonPhaseTitle, RepoLink, ColorfulLoaderWrapper }
+
+export { 
+  GlobalStyle, 
+  Wrapper, 
+  AppTitle, 
+  AppFooter,
+  MoonPhaseTitle, 
+  RepoLink, 
+  ColorfulLoaderWrapper, 
+  GradiantButton 
+}

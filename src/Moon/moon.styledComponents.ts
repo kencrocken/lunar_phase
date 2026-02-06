@@ -3,6 +3,9 @@ import styled from 'styled-components';
 const MoonWrapper = styled.div`
   position: relative;
   min-height: 225px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const OuterMoon = styled.div<{ $outerDiameter: number, $outerColor: string }>`
