@@ -108,6 +108,49 @@ const RepoLink = styled.a`
   }
 `;
 
+
+const NextPhasesWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+`;
+
+const PhaseItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 15px;
+  border-radius: 8px;
+  min-width: 120px;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.2s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.08);
+  }
+`;
+
+const PhaseName = styled.h3`
+  margin: 0 0 5px 0;
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #e0e0e0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+`;
+
+const PhaseDate = styled.p`
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: #b0b0b0;
+`;
+
 export { 
   GlobalStyle, 
   Wrapper, 
@@ -116,5 +159,9 @@ export {
   MoonPhaseTitle, 
   RepoLink, 
   ColorfulLoaderWrapper, 
-  GradiantButton 
+  GradiantButton,
+  NextPhasesWrapper,
+  PhaseItem,
+  PhaseName,
+  PhaseDate
 }

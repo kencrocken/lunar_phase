@@ -98,31 +98,31 @@ interface RecommendedEquipment {
   best_magnification: string;
 }
 
-interface UpcomingPhases {
+export interface UpcomingPhases {
   new_moon: PhaseData;
   first_quarter: PhaseData;
   full_moon: FullMoonPhaseData;
   last_quarter: PhaseData;
 }
 
-interface PhaseData {
+export interface PhaseData {
   last: PhaseEvent;
   next: PhaseEvent;
 }
 
-interface PhaseEvent {
+export interface PhaseEvent {
   timestamp: number;
   datestamp: string;
   days_ago?: number;
   days_ahead?: number;
 }
 
-interface FullMoonPhaseData extends PhaseData {
+export interface FullMoonPhaseData extends PhaseData {
   last: FullMoonEvent;
   next: FullMoonEvent;
 }
 
-interface FullMoonEvent extends PhaseEvent {
+export interface FullMoonEvent extends PhaseEvent {
   name?: string;
   description?: string;
 }

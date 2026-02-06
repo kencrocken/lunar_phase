@@ -12,13 +12,42 @@ import { useGeolocation } from './Hooks/useGeolocation';
 import { useMoonData } from './Hooks/useMoonData';
 import { useState } from 'react';
 
-const DisplayMoonPhase = ({ phaseName, illumination}: { phaseName: string, illumination: string }) => (
-  <>
-    <MoonPhaseTitle>{titleCase(phaseName)}</MoonPhaseTitle>
-    <Moon phaseName={phaseName} illumination={illumination} />
-    <p>Percent Illuminated: {illumination}</p>
-  </>
-);
+import type { UpcomingPhases } from './Types/moonApi.types';
+import { NextPhasesWrapper, PhaseItem, PhaseName, PhaseDate } from './App.styledComponents';
+
+const DisplayMoonPhase = ({ phaseName, illumination, upcomingPhases }: { phaseName: string, illumination: string, upcomingPhases: UpcomingPhases }) => {
+  const phasesList = [
+    { name: 'New Moon', ...upcomingPhases.new_moon.next },
+    { name: 'First Quarter', ...upcomingPhases.first_quarter.next },
+    { name: 'Full Moon', ...upcomingPhases.full_moon.next },
+    { name: 'Last Quarter', ...upcomingPhases.last_quarter.next },
+  ].sort((a, b) => a.timestamp - b.timestamp);
+
+  return (
+    <div className="moon-phase-container">
+      <div className="moon-phase-current">
+        <MoonPhaseTitle>{titleCase(phaseName)}</MoonPhaseTitle>
+        <Moon phaseName={phaseName} illumination={illumination} />
+        <p>Percent Illuminated: {illumination}</p>
+      </div>
+      <NextPhasesWrapper>
+        {phasesList.map((phase) => (
+          <PhaseItem key={phase.name}>
+            <PhaseName>{phase.name}</PhaseName>
+            <PhaseDate>{new Date(phase.datestamp).toLocaleDateString(undefined, {
+              month: 'short',
+              day: 'numeric'
+            })}</PhaseDate>
+            <PhaseDate>{new Date(phase.datestamp).toLocaleTimeString(undefined, {
+              hour: 'numeric',
+              minute: '2-digit'
+            })}</PhaseDate>
+          </PhaseItem>
+        ))}
+      </NextPhasesWrapper>
+    </div>
+  );
+};
 
 const LocationError = ({ locationError }: { locationError: string }) => (
   <>
@@ -85,9 +114,9 @@ function App() {
             <ColorfulLoader />
           </ColorfulLoaderWrapper>
         )}
-        {!moonError && moonData && <DisplayMoonPhase phaseName={moonData.moon.phase_name} illumination={moonData.moon.illumination} />}
-        {moonError && <p>{moonError}</p>}
         {!locationError && <DisplayCoordinates coords={coords} />}
+        {!moonError && moonData && <DisplayMoonPhase phaseName={moonData.moon.phase_name} illumination={moonData.moon.illumination} upcomingPhases={moonData.moon.detailed.upcoming_phases} />}
+        {moonError && <p>{moonError}</p>}
         {locationError && <LocationError locationError={locationError} />}
         <AppFooter>
           <RepoLink href="https://github.com/kencrocken/lunar_phase" aria-label="View source on GitHub">
