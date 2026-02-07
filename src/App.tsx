@@ -99,9 +99,7 @@ function App() {
       <Wrapper>
         <header>
           <AppTitle>Tonight&#39;s Lunar Phase</AppTitle>
-          <p>{currentDate.toLocaleDateString(undefined, dateFormatOptions)}
-            {!locationError && coords && <DisplayCoordinates coords={coords} />}
-          </p>
+          
         </header>
         {!coords && !isFetching && (
           <GradiantButton onClick={handleTriggerGeolocation}>Get Geolocation</GradiantButton>
@@ -116,6 +114,9 @@ function App() {
         )}
         
         {!moonError && moonData && <DisplayMoonPhase phaseName={moonData.moon.phase_name} illumination={moonData.moon.illumination} upcomingPhases={moonData.moon.detailed.upcoming_phases} />}
+        <p>{currentDate.toLocaleDateString(undefined, dateFormatOptions)}
+            {!locationError && coords && <DisplayCoordinates coords={coords} />}
+          </p>
         {moonError && <p>{moonError}</p>}
         {locationError && <LocationError locationError={locationError} />}
         <AppFooter>
