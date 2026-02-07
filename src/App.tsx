@@ -60,12 +60,10 @@ const DisplayCoordinates = ({ coords }: { coords?: Location }) => {
   return (
     <>
       {coords && (
-        <div>
-          <p>Your current Latitude &amp; Longitude:</p>
-          <p>
-            <span className="latitude">{coords.latitude}, </span> <span className="longitude">{coords.longitude}</span>
-          </p>
-        </div>
+        <span>
+          <span style={{ display: 'inline-block', padding: '0 10px' }}>
+            ·</span> Lat: {coords.latitude}, Long: {coords.longitude}
+        </span>
       )}
     </>
   );
@@ -101,7 +99,9 @@ function App() {
       <Wrapper>
         <header>
           <AppTitle>Tonight&#39;s Lunar Phase</AppTitle>
-          <p>{currentDate.toLocaleDateString(undefined, dateFormatOptions)}</p>
+          <p>{currentDate.toLocaleDateString(undefined, dateFormatOptions)}
+            {!locationError && coords && <DisplayCoordinates coords={coords} />}
+          </p>
         </header>
         {!coords && !isFetching && (
           <GradiantButton onClick={handleTriggerGeolocation}>Get Geolocation</GradiantButton>
@@ -114,7 +114,7 @@ function App() {
             <ColorfulLoader />
           </ColorfulLoaderWrapper>
         )}
-        {!locationError && <DisplayCoordinates coords={coords} />}
+        
         {!moonError && moonData && <DisplayMoonPhase phaseName={moonData.moon.phase_name} illumination={moonData.moon.illumination} upcomingPhases={moonData.moon.detailed.upcoming_phases} />}
         {moonError && <p>{moonError}</p>}
         {locationError && <LocationError locationError={locationError} />}

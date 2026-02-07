@@ -48,9 +48,12 @@ const GlobalStyle = createGlobalStyle`
 
 const Wrapper = styled.div`
   position: absolute;
-  top: 10%;
+  top: 0;
   left: 0;
   right: 0;
+  @media (min-width: 768px) {
+    top: 10%;
+  }
 `;
 
 const ColorfulLoaderWrapper = styled.div`
